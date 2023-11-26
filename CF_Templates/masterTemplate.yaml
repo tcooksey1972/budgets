@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Master Template for AWS Budget Management
+
+# Deployment Steps:
+# 1. Upload Individual Templates:
+#    - Upload the individual CloudFormation templates (BudgetAndSNSTopic.yaml, LambdaFunctions.yaml, EventBridgeAndMore.yaml) 
+#      to an S3 bucket.  Ensure that the individual CloudFormation templates are uploaded to your S3 bucket before creating 
+#      the master stack.
+# 2. Update Template URLs:
+#    - Replace the 'TemplateURL' properties below with the actual S3 URLs of your uploaded templates.
+# 3. Create Stack:
+#    - Use this master template to create a stack in AWS CloudFormation.  You can create the stack using this master template 
+#      through the AWS CloudFormation console or the AWS CLI.
+# 4. Manual Steps:
+#    - After deployment, complete any manual steps required (like creating SCPs, attaching policies, or 
+#      subscribing Lambda to the SNS topic) in the AWS Management Console.  Some steps, like setting up SCPs or Lambda triggers, 
+#      are not automated and require manual configuration in the AWS Management Console.
+
+Resources:
+  BudgetAndSNSTopicStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: 's3://your-bucket-name/BudgetAndSNSTopic.yaml'  # Replace with actual S3 URL
+
+  LambdaFunctionsStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: 's3://your-bucket-name/LambdaFunctions.yaml'  # Replace with actual S3 URL
+
+  EventBridgeAndMoreStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: 's3://your-bucket-name/EventBridgeAndMore.yaml'  # Replace with actual S3 URL

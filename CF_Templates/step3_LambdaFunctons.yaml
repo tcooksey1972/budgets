@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Lambda Functions for Account Management
+
+# Notes:
+# - Step 3: Create Lambda Functions
+#   1. Lambda for Disabling Accounts:
+#      - Set up with basic execution role and permissions.
+#      - Use provided Python code stub. Modify as needed.
+#      - Ensure Lambda has IAM permissions to modify SCPs (Service Control Policies).
+#   2. Lambda for Re-enabling Accounts:
+#      - Similar setup as the disabling Lambda.
+#      - Remove SCPs at the beginning of each month.
+#      - Use provided Python code stub for re-enabling. Modify as needed.
+# - Important: After deploying this template, upload the Lambda code via the AWS console or AWS CLI.
+
+Resources:
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [lambda.amazonaws.com]
+            Action: ['sts:AssumeRole']
+      Policies:
+        - PolicyName: LambdaExecutionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: ['logs:*']
+                Resource: 'arn:aws:logs:*:*:*'
+              - Effect: Allow
+                Action: ['organizations:AttachPolicy', 'organizations:DetachPolicy']
+                Resource: '*'  # Modify as needed for security best practices
+
+  DisableAccountsLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: python3.8
+      FunctionName: 'DisableAccountsLambda'
+
+  EnableAccountsLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: python3.8
+      FunctionName: 'EnableAccountsLambda'
+
+Outputs:
+  DisableAccountsLambdaArn:
+    Description: "ARN of Disable Accounts Lambda Function"
+    Value: !GetAtt DisableAccountsLambda.Arn
+
+  EnableAccountsLambdaArn:
+    Description: "ARN of Enable Accounts Lambda Function"
+    Value: !GetAtt EnableAccountsLambda.Arn

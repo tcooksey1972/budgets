@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS Budget and SNS Topic Creation
+
+# Notes:
+# Step 1: Set Up AWS Budgets
+# - Budget Creation: This template creates a monthly cost budget of $1,000.
+# - Notifications: Configures budget notifications at 60%, 80%, 90%, and 100% thresholds sent to an SNS topic.
+# - Customization: Modify the CostFilters section to tailor the budget for specific AWS services if needed.
+#
+# Step 2: Set Up SNS Topic
+# - SNS Topic Creation: Creates an SNS topic named "BudgetAlerts".
+# - Email Subscription (optional): Add an email subscription to receive alerts directly. This step must be completed manually in the AWS console as email subscriptions require confirmation.
+
+Resources:
+  BudgetNotificationTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: "BudgetAlerts"
+
+  MyBudget:
+    Type: 'AWS::Budgets::Budget'
+    Properties:
+      Budget:
+        BudgetName: "MyMonthlyCostBudget"
+        TimeUnit: MONTHLY
+        BudgetType: COST
+        BudgetLimit:
+          Amount: 1000
+          Unit: USD
+        CostFilters:
+          Service: ["Amazon EC2", "Amazon S3"] # Specify your services here
+      NotificationsWithSubscribers:
+        - Notification:
+            NotificationType: FORECASTED
+            ComparisonOperator: GREATER_THAN
+            Threshold: 60
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref BudgetNotificationTopic
+        - Notification:
+            NotificationType: FORECASTED
+            ComparisonOperator: GREATER_THAN
+            Threshold: 80
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref BudgetNotificationTopic
+        - Notification:
+            NotificationType: FORECASTED
+            ComparisonOperator: GREATER_THAN
+            Threshold: 90
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref BudgetNotificationTopic
+        - Notification:
+            NotificationType: FORECASTED
+            ComparisonOperator: GREATER_THAN
+            Threshold: 100
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref BudgetNotificationTopic
+
+Outputs:
+  SNSTopicARN:
+    Description: "ARN of the SNS Topic for Budget Notifications"
+    Value: !Ref BudgetNotificationTopic
