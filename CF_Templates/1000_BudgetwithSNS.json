@@ -1,0 +1,66 @@
+{
+    "Description": "Basic Budget test",
+    "Resources": {
+      "Budget": {
+        "Type": "AWS::Budgets::Budget",
+        "Properties": {
+          "Budget": {
+            "BudgetLimit": {
+              "Amount": "1000",
+              "Unit": "USD"
+            },
+            "TimeUnit": "MONTHLY",
+            "TimePeriod": {
+              "Start": "1225864800",
+              "End": "1926864800"
+            },
+            "BudgetType": "COST",
+            "CostFilters": {
+              "AZ": [
+                "us-east-1",
+                "us-west-1",
+                "us-east-2"
+              ]
+            }
+          },
+          "NotificationsWithSubscribers": [
+            {
+              "Notification": {
+                "NotificationType": "ACTUAL",
+                "ComparisonOperator": "GREATER_THAN",
+                "Threshold": 99
+              },
+              "Subscribers": [
+                {
+                  "SubscriptionType": "EMAIL",
+                  "Address": "email@example.com"
+                },
+                {
+                  "SubscriptionType": "EMAIL",
+                  "Address": "email2@example.com"
+                }
+              ]
+            },
+            {
+              "Notification": {
+                "NotificationType": "ACTUAL",
+                "ComparisonOperator": "GREATER_THAN",
+                "Threshold": 80
+              },
+              "Subscribers": [
+                {
+                  "SubscriptionType": "EMAIL",
+                  "Address": "email@example.com"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "Outputs": {
+      "BudgetId": {
+        "Value": "BudgetExample"
+      }
+    }
+  }
