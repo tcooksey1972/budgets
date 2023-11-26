@@ -1,5 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
+  # Nested template for AWS Budgets and SNS Topic creation.
 Description: AWS Budget and SNS Topic Creation
+
 
 # Notes:
 # Step 1: Set Up AWS Budgets
@@ -15,11 +17,11 @@ Resources:
   BudgetNotificationTopic:
     Type: AWS::SNS::Topic
     Properties:
-      TopicName: "BudgetAlerts"
+      TopicName: "BudgetAlerts"  # Configuration details for the Buget SNS Topic
 
   MyBudget:
     Type: 'AWS::Budgets::Budget'
-    Properties:
+    Properties:  # Define the properties for AWS Budget (budget limit, notifications, etc.)
       Budget:
         BudgetName: "MyMonthlyCostBudget"
         TimeUnit: MONTHLY

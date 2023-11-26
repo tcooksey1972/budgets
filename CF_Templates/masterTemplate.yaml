@@ -19,15 +19,17 @@ Description: Master Template for AWS Budget Management
 Resources:
   BudgetAndSNSTopicStack:
     Type: AWS::CloudFormation::Stack
-    Properties:
+    Properties:  # Properties and parameters for the Budgets and SNS Topic stack
       TemplateURL: 's3://your-bucket-name/BudgetAndSNSTopic.yaml'  # Replace with actual S3 URL
 
   LambdaFunctionsStack:
     Type: AWS::CloudFormation::Stack
-    Properties:
+    Properties:  # Properties and parameters for the Lambda Functions stack
       TemplateURL: 's3://your-bucket-name/LambdaFunctions.yaml'  # Replace with actual S3 URL
 
   EventBridgeAndMoreStack:
     Type: AWS::CloudFormation::Stack
-    Properties:
+    Properties:  # Properties and parameters for the EventBridge and additional configurations stack
       TemplateURL: 's3://your-bucket-name/EventBridgeAndMore.yaml'  # Replace with actual S3 URL
+
+# Add additional resources, parameters, outputs, or conditions as needed

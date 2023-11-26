@@ -7,7 +7,9 @@ Description: EventBridge Rule for Monthly Lambda Execution
 #   - Sets the target as the Lambda function for re-enabling accounts.
 # - Step 5 and 6: Manual Steps
 #   - Create and manage SCPs and subscribe Lambda to the SNS topic manually in the AWS console.
-
+# EventBridge Rule Configuration
+# - The rule is set to trigger at a specified schedule to execute Lambda functions.
+# - Ensure that the target Lambda ARN is correctly specified.
 Resources:
   MonthlyResetRule:
     Type: AWS::Events::Rule

@@ -1,8 +1,13 @@
 AWSTemplateFormatVersion: '2010-09-09'
+# Nested template for creating Lambda functions for budget alert processing.
 Description: Lambda Functions for Account Management
 
 # Notes:
+# - This template deploys Lambda functions for managing budget alerts.
+# - The functions handle tasks like disabling accounts when budget thresholds are reached.
 # - Step 3: Create Lambda Functions
+#   - Each function has specific roles and permissions set for its operation.
+#   - Modify the runtime, handler, and other properties as per your requirements.
 #   1. Lambda for Disabling Accounts:
 #      - Set up with basic execution role and permissions.
 #      - Use provided Python code stub. Modify as needed.
