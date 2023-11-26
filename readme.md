@@ -2,7 +2,7 @@
 
 ## Overview
 This project implements a budget management system for AWS to monitor and control AWS spending in development accounts. It utilizes AWS Budgets, AWS Config, Lambda, SNS, and SCPs to ensure spending does not exceed a predefined budget.  
-Comprehensive isntructions can be found in the comments of the cloudformation templates and in the Setupinstruciotns.rtf
+Comprehensive isntructions can be found in the comments of the cloudformation templates and in the Setupinstruciotns.md
 
 ## Below are some helpful links to read over to help understand this project and get started.
 
